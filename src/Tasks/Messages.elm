@@ -1,4 +1,5 @@
 module Tasks.Messages exposing (..)
 
 type Msg
-  = NoOp
+  = NewTask String
+  | NoOp

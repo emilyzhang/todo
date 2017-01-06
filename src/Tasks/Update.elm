@@ -10,3 +10,5 @@ update message tasks =
     case message of
         NoOp ->
             ( tasks, Cmd.none )
+        NewTask addTask ->
+            ( Task 0 0 addTask :: tasks , Cmd.none )
