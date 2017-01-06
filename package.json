@@ -1,0 +1,32 @@
+{
+  "name": "mytodo",
+  "version": "1.0.0",
+  "description": "todo list",
+  "main": "index.js",
+  "scripts": {
+    "api": "node api.js",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "dev": "webpack-dev-server --port 3000"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-connect": "^4.0.0",
+    "gulp-elm": "^0.4.4",
+    "gulp-plumber": "^1.1.0",
+    "gulp-util": "^3.0.7"
+  },
+  "dependencies": {
+    "css-loader": "^0.26.1",
+    "elm-webpack-loader": "^3.1.0",
+    "file-loader": "^0.9.0",
+    "json-server": "^0.9.4",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.14.0",
+    "webpack-dev-middleware": "^1.9.0",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
