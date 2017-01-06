@@ -9,13 +9,15 @@ var connect = require('gulp-connect');
 var paths = {
   dest: 'dist',
   elm: 'src/Main.elm',
-  static: 'static/*.{js,css,html}'
+  allelm: 'src/*.elm',
+  taskelm: 'src/Tasks/*.elm',
+  static: 'static/*.{js,css,html}',
 };
 
 // Init Elm
 gulp.task('elm-init', elm.init);
 
-// Compile Elm to HTML
+// Compile Main.elm to JS
 gulp.task('elm', ['elm-init'], function(){
     return gulp.src(paths.elm)
         .pipe(plumber())
@@ -32,7 +34,8 @@ gulp.task('static', function() {
 
 // Watch for changes and compile
 gulp.task('watch', function() {
-    gulp.watch(paths.elm, ['elm']);
+    gulp.watch(paths.allelm, ['elm']);
+    gulp.watch(paths.taskelm, ['elm']);
     gulp.watch(paths.static, ['static']);
 });
 
