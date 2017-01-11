@@ -10,7 +10,6 @@ view : List Task -> Html Msg
 view tasks =
   div []
     [ header
-    -- , newTask
     , list tasks ]
 
 
@@ -26,30 +25,22 @@ header =
 list: List Task -> Html Msg
 list tasks =
     div [ class "ui raised very padded container segment" ]
-        [ div [ class "ui two column grid container raised segment"]
-            [ div [ class "centered column center aligned black"] [ text "Priority"]
-            , div [ class "centered column center aligned teal"] [ text "Task"] ] ]
-        -- [ table []
-        --   [ thead []
-        --     [ th [] [ div [ class "column" ] [ div [] [ text "Id" ]] ]
-        --     , th [] [ div [ class "column" ] [ div [] [ text "Priority" ]] ]
-        --     , th [] [ div [ class "column" ] [ div [] [ text "Task" ]] ]
-        --     ]
-        --     , tbody [] (List.map taskRow tasks)
-        --   ]
-        -- ]
+        [ div [ class "ui two column grid container segment teal inverted"]
+            [ div [ class "centered column center aligned teal"] [ text "Task"] ]
+        , div [] (List.map taskRow tasks) ]
+        -- div [ class "ui raised very padded container segment" ]
+        --     [ div [ class "ui two column grid container raised segment"]
+        --         [ div [ class "centered column center aligned black"] [ text "Priority"]
+        --         , div [ class "centered column center aligned teal"] [ text "Task"] ]
+        --       , div [] (List.map taskRow tasks) ]
 
 taskRow : Task -> Html Msg
 taskRow task =
-    div [ class "ui raised very padded text container" ]
-        []
-    -- tr [ class "four column doubling stackable grid container" ]
-    --   [ td [ class "column" ] [ text (toString task.id) ]
-    --   , td [ class "column" ] [ text (toString task.priority) ]
-    --   , td [ class "column" ] [ text task.action ]
-    --   , td [ class "column" ]
-    --       []
-    --   ]
+    div [ class "ui two column grid container segment"]
+        [ div [ class "centered column center aligned"] [ text task.action ] ]
+    -- div [ class "ui two column grid container segment"]
+    --     [ div [ class "centered column center aligned"] [ text (toString task.priority)]
+    --     , div [ class "centered column center aligned"] [ text task.action ] ]
 
 newTask : Html Msg
 newTask =
