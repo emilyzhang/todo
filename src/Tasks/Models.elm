@@ -2,13 +2,16 @@ module Tasks.Models exposing (..)
 
 
 type alias TaskId =
-  Int
+    Int
+
+
 
 -- currentID : Int
 -- currentID = 2
 
+
 type alias Task =
-  { id : TaskId
-  , priority : Int
-  , action : String
-  }
+    { id : TaskId
+    , priority : Int
+    , action : String
+    }

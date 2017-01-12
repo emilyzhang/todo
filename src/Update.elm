@@ -1,6 +1,5 @@
 module Update exposing (..)
 
-
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 import Tasks.Update

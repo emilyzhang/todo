@@ -8,11 +8,13 @@ type alias Model =
     , newtask : String
     }
 
+
 initialModel : Model
 initialModel =
-    { tasks = [ Task 1 5 "apply to internships"
-              , Task 2 7 "buy milk"
-              , Task 3 8 "finish this todo list"
-              ]
+    { tasks =
+        [ Task 1 5 "apply to internships"
+        , Task 2 7 "buy milk"
+        , Task 3 8 "finish this todo list"
+        ]
     , newtask = ""
     }
