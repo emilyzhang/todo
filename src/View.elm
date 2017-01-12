@@ -37,7 +37,12 @@ taskRow task =
         , div [ class "ui seven wide column" ]
             [ div
                 [ class "ui checkbox" ]
-                [ input [ type_ "checkbox" ] []
+                [ input
+                    [ type_ "checkbox"
+                    , checked (task.done)
+                    , onClick (ToggleCheck task.id)
+                    ]
+                    []
                 , label [ class "column" ] [ text task.action ]
                 ]
             ]

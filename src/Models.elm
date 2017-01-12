@@ -7,6 +7,7 @@ type Msg
     = CreateTask String
     | AddTask
     | DeleteTask TaskId
+    | ToggleCheck TaskId
 
 
 

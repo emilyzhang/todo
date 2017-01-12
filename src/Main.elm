@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Html exposing (..)
 import View exposing (view)
-import Models exposing (Msg(..), Model, Task)
+import Models exposing (Msg(..), Model, Task, TaskId)
 
 
 -- MAIN
@@ -30,12 +30,12 @@ init =
 initialModel : Model
 initialModel =
     { tasks =
-        [ Task 1 False "apply to internships"
-        , Task 2 True "buy milk"
-        , Task 3 False "finish this todo list"
+        [ Task 0 False "apply to internships"
+        , Task 1 True "buy milk"
+        , Task 2 False "finish this todo list"
         ]
     , newtask = ""
-    , currentID = 4
+    , currentID = 3
     }
 
 
@@ -62,7 +62,22 @@ update message model =
 
         DeleteTask taskId ->
             let
-                newlist =
+                newTasks =
                     List.filter (\t -> t.id /= taskId) model.tasks
             in
-                ( { model | tasks = newlist }, Cmd.none )
+                ( { model | tasks = newTasks }, Cmd.none )
+
+        ToggleCheck taskId ->
+            let
+                newTasks =
+                    List.map (toggleDone taskId) model.tasks
+            in
+                ( { model | tasks = newTasks }, Cmd.none )
+
+
+toggleDone : TaskId -> Task -> Task
+toggleDone taskId task =
+    if task.id == taskId then
+        Task task.id (not task.done) task.action
+    else
+        task
