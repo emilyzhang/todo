@@ -1,8 +1,8 @@
-module TaskList exposing (..)
+module Main exposing (..)
 
 import Html exposing (..)
 import View exposing (view)
-import Declarations exposing (Msg(..), Model, Task)
+import Models exposing (Msg(..), Model, Task)
 
 
 -- MAIN

@@ -3,7 +3,7 @@ module View exposing (..)
 import Html exposing (..)
 import Html.Events exposing (onInput, onClick, onSubmit)
 import Html.Attributes exposing (..)
-import Declarations exposing (Msg(..), Model, Task)
+import Models exposing (Msg(..), Model, Task)
 
 
 view : Model -> Html Msg

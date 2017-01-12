@@ -1,4 +1,4 @@
-module Declarations exposing (..)
+module Models exposing (..)
 
 -- MESSAGES
 
