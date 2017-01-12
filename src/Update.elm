@@ -11,7 +11,7 @@ update msg model =
     case msg of
         TaskMsg subMsg ->
             let
-                ( updatedTasks, cmd ) =
-                    Tasks.Update.update subMsg model.tasks
+                ( newTask, updatedTasks, cmd ) =
+                    Tasks.Update.update subMsg model.newtask model.tasks
             in
-                ( { model | tasks = updatedTasks }, Cmd.map TaskMsg cmd )
+                ( { model | tasks = updatedTasks, newtask = newTask }, Cmd.map TaskMsg cmd )
