@@ -12,6 +12,6 @@ type alias TaskId =
 
 type alias Task =
     { id : TaskId
-    , priority : Int
+    , checked : Bool
     , action : String
     }

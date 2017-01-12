@@ -19,7 +19,7 @@ header : Html Msg
 header =
     div [ class "ui center aligned sizer vertical raised segment" ]
         [ div [ class "ui huge header" ] [ text " " ]
-        , div [ class "ui teal huge header" ] [ text "to do:" ]
+        , div [ class "ui huge teal header" ] [ text "to do:" ]
         , div [ class "ui large header" ] [ text " " ]
         , newTask
         ]
@@ -33,12 +33,21 @@ list tasks =
 
 taskRow : Task -> Html Msg
 taskRow task =
-    div [ class "ui column grid container" ]
-        [ div [ class "center aligned column" ]
-            [ div [ class "ui checkbox" ]
+    div [ class "ui grid container" ]
+        [ div [ class "ui four wide column" ] []
+        , div [ class "ui seven wide column" ]
+            [ div
+                [ class "ui checkbox" ]
                 [ input [ type_ "checkbox" ] []
-                , label [] [ text task.action ]
+                , label [ class "column" ] [ text task.action ]
                 ]
+            ]
+        , div [ class "ui column" ]
+            [ div
+                [ class "ui teal mini icon button"
+                , onClick (DeleteTask task.id)
+                ]
+                [ text "X" ]
             ]
         ]
 
