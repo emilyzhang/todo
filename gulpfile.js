@@ -10,7 +10,6 @@ var paths = {
   dest: 'dist',
   elm: 'src/Main.elm',
   allelm: 'src/*.elm',
-  taskelm: 'src/Tasks/*.elm',
   static: 'static/*.{js,css,html}',
 };
 
@@ -35,7 +34,6 @@ gulp.task('static', function() {
 // Watch for changes and compile
 gulp.task('watch', function() {
     gulp.watch(paths.allelm, ['elm']);
-    gulp.watch(paths.taskelm, ['elm']);
     gulp.watch(paths.static, ['static']);
 });
 
