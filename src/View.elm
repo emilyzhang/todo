@@ -43,7 +43,7 @@ taskRow task =
                     , onClick (ToggleCheck task.id)
                     ]
                     []
-                , label [ class "column" ] [ text task.action ]
+                , label [ class "column" ] [ (checkText task) ]
                 ]
             ]
         , div [ class "ui column" ]
@@ -54,6 +54,14 @@ taskRow task =
                 [ text "X" ]
             ]
         ]
+
+
+checkText : Task -> Html Msg
+checkText task =
+    if task.done then
+        s [] [ text task.action ]
+    else
+        text task.action
 
 
 newTask : Html Msg

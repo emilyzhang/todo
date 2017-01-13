@@ -29,4 +29,5 @@ type alias Task =
     { id : TaskId
     , done : Bool
     , action : String
+    , editing : Bool
     }

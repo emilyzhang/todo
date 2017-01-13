@@ -30,9 +30,9 @@ init =
 initialModel : Model
 initialModel =
     { tasks =
-        [ Task 0 False "apply to internships"
-        , Task 1 True "buy milk"
-        , Task 2 False "finish this todo list"
+        [ Task 0 False "apply to internships" False
+        , Task 1 True "buy milk" False
+        , Task 2 False "finish this todo list" False
         ]
     , newtask = ""
     , currentID = 3
@@ -54,7 +54,7 @@ update message model =
                 ( model, Cmd.none )
             else
                 ( { model
-                    | tasks = Task model.currentID False model.newtask :: model.tasks
+                    | tasks = Task model.currentID False model.newtask False :: model.tasks
                     , currentID = model.currentID + 1
                   }
                 , Cmd.none
@@ -78,6 +78,6 @@ update message model =
 toggleDone : TaskId -> Task -> Task
 toggleDone taskId task =
     if task.id == taskId then
-        Task task.id (not task.done) task.action
+        Task task.id (not task.done) task.action task.editing
     else
         task
