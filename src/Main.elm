@@ -35,6 +35,7 @@ initialModel =
         , Task 2 False "finish this todo list" False
         ]
     , newtask = ""
+    , edit = ""
     , currentID = 3
     }
 
@@ -48,6 +49,9 @@ update message model =
     case message of
         CreateTask writetask ->
             ( { model | newtask = writetask }, Cmd.none )
+
+        EditTask edittask ->
+            ( { model | edit = edittask }, Cmd.none )
 
         AddTask ->
             if model.newtask == "" then
@@ -82,7 +86,7 @@ update message model =
                 ( { model | tasks = newTasks }, Cmd.none )
 
         SaveEdit taskId ->
-            if model.newtask == "" then
+            if model.edit == "" then
                 let
                     newTasks =
                         List.map (toggleEdit taskId) model.tasks
@@ -91,7 +95,7 @@ update message model =
             else
                 let
                     newTasks =
-                        List.map (editTask taskId model.newtask) model.tasks
+                        List.map (saveTask taskId model.edit) model.tasks
                 in
                     ( { model
                         | tasks = newTasks
@@ -117,8 +121,8 @@ toggleEdit taskId task =
         task
 
 
-editTask : TaskId -> String -> Task -> Task
-editTask taskId edit task =
+saveTask : TaskId -> String -> Task -> Task
+saveTask taskId edit task =
     if task.id == taskId then
         Task task.id task.done edit (not task.editing)
     else

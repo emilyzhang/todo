@@ -5,6 +5,7 @@ module Models exposing (..)
 
 type Msg
     = CreateTask String
+    | EditTask String
     | AddTask
     | SaveEdit TaskId
     | DeleteTask TaskId
@@ -19,6 +20,7 @@ type Msg
 type alias Model =
     { tasks : List Task
     , newtask : String
+    , edit : String
     , currentID : Int
     }
 

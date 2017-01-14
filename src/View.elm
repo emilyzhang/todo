@@ -70,7 +70,7 @@ editTask task =
             [ input
                 [ type_ "text"
                 , placeholder task.action
-                , onInput CreateTask
+                , onInput EditTask
                 ]
                 []
             ]
