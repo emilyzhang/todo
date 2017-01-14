@@ -74,10 +74,45 @@ update message model =
             in
                 ( { model | tasks = newTasks }, Cmd.none )
 
+        ToggleEdit taskId ->
+            let
+                newTasks =
+                    List.map (toggleEdit taskId) model.tasks
+            in
+                ( { model | tasks = newTasks }, Cmd.none )
+
+        SaveEdit taskId ->
+            let
+                newTasks =
+                    List.map (editTask taskId model.newtask) model.tasks
+            in
+                ( { model
+                    | tasks = newTasks
+                    , newtask = ""
+                  }
+                , Cmd.none
+                )
+
 
 toggleDone : TaskId -> Task -> Task
 toggleDone taskId task =
     if task.id == taskId then
         Task task.id (not task.done) task.action task.editing
+    else
+        task
+
+
+toggleEdit : TaskId -> Task -> Task
+toggleEdit taskId task =
+    if task.id == taskId then
+        Task task.id task.done task.action (not task.editing)
+    else
+        task
+
+
+editTask : TaskId -> String -> Task -> Task
+editTask taskId edit task =
+    if task.id == taskId then
+        Task task.id task.done edit (not task.editing)
     else
         task

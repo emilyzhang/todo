@@ -39,25 +39,69 @@ taskRow task =
                 [ class "ui checkbox" ]
                 [ input
                     [ type_ "checkbox"
-                    , checked (task.done)
+                    , checked task.done
                     , onClick (ToggleCheck task.id)
                     ]
                     []
-                , label [ class "column" ] [ (checkText task) ]
+                , label [ class "column" ]
+                    [ (if task.editing then
+                        editTask task
+                       else
+                        checkDone task
+                      )
+                    ]
                 ]
             ]
-        , div [ class "ui column" ]
-            [ div
-                [ class "ui teal mini icon button"
-                , onClick (DeleteTask task.id)
-                ]
-                [ text "X" ]
+        , div [ class "ui two wide column" ]
+            [ deleteTask task
+            , editButton task
             ]
         ]
 
 
-checkText : Task -> Html Msg
-checkText task =
+editTask : Task -> Html Msg
+editTask task =
+    div [ class "ui action input" ]
+        [ Html.form
+            [ type_ "submit"
+            , class "ui form"
+            , onSubmit (SaveEdit task.id)
+            ]
+            [ input
+                [ type_ "text"
+                , placeholder task.action
+                , onInput CreateTask
+                ]
+                []
+            ]
+        ]
+
+
+deleteTask : Task -> Html Msg
+deleteTask task =
+    div
+        [ class "ui teal mini icon button"
+        , onClick (DeleteTask task.id)
+        ]
+        [ text "X" ]
+
+
+editButton : Task -> Html Msg
+editButton task =
+    div
+        [ class "ui teal mini icon button"
+        , onClick
+            (if (not task.editing) then
+                ToggleEdit task.id
+             else
+                SaveEdit task.id
+            )
+        ]
+        [ text "✎" ]
+
+
+checkDone : Task -> Html Msg
+checkDone task =
     if task.done then
         s [] [ text task.action ]
     else
@@ -70,7 +114,6 @@ newTask =
         [ Html.form
             [ type_ "submit"
             , class "ui form"
-            , placeholder "Add a new task!"
             , onSubmit AddTask
             ]
             [ input

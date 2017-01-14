@@ -6,8 +6,10 @@ module Models exposing (..)
 type Msg
     = CreateTask String
     | AddTask
+    | SaveEdit TaskId
     | DeleteTask TaskId
     | ToggleCheck TaskId
+    | ToggleEdit TaskId
 
 
 
