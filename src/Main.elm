@@ -82,16 +82,23 @@ update message model =
                 ( { model | tasks = newTasks }, Cmd.none )
 
         SaveEdit taskId ->
-            let
-                newTasks =
-                    List.map (editTask taskId model.newtask) model.tasks
-            in
-                ( { model
-                    | tasks = newTasks
-                    , newtask = ""
-                  }
-                , Cmd.none
-                )
+            if model.newtask == "" then
+                let
+                    newTasks =
+                        List.map (toggleEdit taskId) model.tasks
+                in
+                    ( { model | tasks = newTasks }, Cmd.none )
+            else
+                let
+                    newTasks =
+                        List.map (editTask taskId model.newtask) model.tasks
+                in
+                    ( { model
+                        | tasks = newTasks
+                        , newtask = ""
+                      }
+                    , Cmd.none
+                    )
 
 
 toggleDone : TaskId -> Task -> Task
