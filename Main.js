@@ -8759,14 +8759,14 @@ var _user$project$Main$initialModel = {
 			_0: A4(_user$project$Models$Task, 1, true, 'things are pretty self explanatory', false),
 			_1: {
 				ctor: '::',
-				_0: A4(_user$project$Models$Task, 1, false, 'so get to work, ya overachiever!', false),
+				_0: A4(_user$project$Models$Task, 2, false, 'so get to work, ya overachiever!', false),
 				_1: {ctor: '[]'}
 			}
 		}
 	},
 	newtask: '',
 	edit: '',
-	currentID: 2
+	currentID: 3
 };
 var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
 var _user$project$Main$main = _elm_lang$html$Html$program(
