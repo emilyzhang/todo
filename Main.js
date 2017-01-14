@@ -8753,7 +8753,7 @@ var _user$project$Main$update = F2(
 var _user$project$Main$initialModel = {
 	tasks: {
 		ctor: '::',
-		_0: A4(_user$project$Models$Task, 0, false, 'hello & welcome to this todo list!', false),
+		_0: A4(_user$project$Models$Task, 0, false, 'welcome to this todo list!', false),
 		_1: {
 			ctor: '::',
 			_0: A4(_user$project$Models$Task, 1, true, 'things are pretty self explanatory', false),

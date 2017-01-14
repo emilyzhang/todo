@@ -30,7 +30,7 @@ init =
 initialModel : Model
 initialModel =
     { tasks =
-        [ Task 0 False "hello & welcome to this todo list!" False
+        [ Task 0 False "welcome to this todo list!" False
         , Task 1 True "things are pretty self explanatory" False
         , Task 2 False "so get to work, ya overachiever!" False
         ]
