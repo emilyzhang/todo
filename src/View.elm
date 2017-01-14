@@ -61,7 +61,7 @@ taskRow task =
 
 editTask : Task -> Html Msg
 editTask task =
-    div [ class "ui action input" ]
+    div [ class "ui small transparent input" ]
         [ Html.form
             [ type_ "submit"
             , class "ui form"
@@ -110,7 +110,7 @@ checkDone task =
 
 newTask : Html Msg
 newTask =
-    div [ class "ui big action input" ]
+    div [ class "ui big input" ]
         [ Html.form
             [ type_ "submit"
             , class "ui form"
