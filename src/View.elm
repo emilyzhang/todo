@@ -53,8 +53,8 @@ taskRow task =
                 ]
             ]
         , div [ class "ui two wide column" ]
-            [ deleteTask task
-            , editButton task
+            [ editButton task
+            , deleteTask task
             ]
         ]
 

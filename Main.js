@@ -3963,7 +3963,7 @@ function endsWith(sub, str)
 function indexes(sub, str)
 {
 	var subLen = sub.length;
-
+	
 	if (subLen < 1)
 	{
 		return _elm_lang$core$Native_List.Nil;
@@ -3976,8 +3976,8 @@ function indexes(sub, str)
 	{
 		is.push(i);
 		i = i + subLen;
-	}
-
+	}	
+	
 	return _elm_lang$core$Native_List.fromArray(is);
 }
 
@@ -8531,10 +8531,10 @@ var _user$project$View$taskRow = function (task) {
 						},
 						{
 							ctor: '::',
-							_0: _user$project$View$deleteTask(task),
+							_0: _user$project$View$editButton(task),
 							_1: {
 								ctor: '::',
-								_0: _user$project$View$editButton(task),
+								_0: _user$project$View$deleteTask(task),
 								_1: {ctor: '[]'}
 							}
 						}),
@@ -8810,3 +8810,4 @@ for (var publicModule in Elm)
 }
 
 }).call(this);
+
