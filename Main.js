@@ -3963,7 +3963,7 @@ function endsWith(sub, str)
 function indexes(sub, str)
 {
 	var subLen = sub.length;
-	
+
 	if (subLen < 1)
 	{
 		return _elm_lang$core$Native_List.Nil;
@@ -3976,8 +3976,8 @@ function indexes(sub, str)
 	{
 		is.push(i);
 		i = i + subLen;
-	}	
-	
+	}
+
 	return _elm_lang$core$Native_List.fromArray(is);
 }
 
@@ -8509,11 +8509,7 @@ var _user$project$View$taskRow = function (task) {
 									ctor: '::',
 									_0: A2(
 										_elm_lang$html$Html$label,
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('column'),
-											_1: {ctor: '[]'}
-										},
+										{ctor: '[]'},
 										{
 											ctor: '::',
 											_0: task.editing ? _user$project$View$editTask(task) : _user$project$View$checkDone(task),
@@ -8744,7 +8740,7 @@ var _user$project$Main$update = F2(
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{tasks: newTasks, newtask: ''}),
+							{tasks: newTasks, edit: ''}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				}
@@ -8814,4 +8810,3 @@ for (var publicModule in Elm)
 }
 
 }).call(this);
-
