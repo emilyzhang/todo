@@ -43,7 +43,7 @@ taskRow task =
                     , onClick (ToggleCheck task.id)
                     ]
                     []
-                , label [ class "column" ]
+                , label []
                     [ (if task.editing then
                         editTask task
                        else

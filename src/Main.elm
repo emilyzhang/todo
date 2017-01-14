@@ -99,7 +99,7 @@ update message model =
                 in
                     ( { model
                         | tasks = newTasks
-                        , newtask = ""
+                        , edit = ""
                       }
                     , Cmd.none
                     )
