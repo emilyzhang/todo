@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <title>Todo List</title>
     <link rel="stylesheet" type="text/css" href="semantic.min.css">
-  </head>
-  <body>
-  </body>
-  <script src="Main.js"></script>
-  <script src="semantic.min.js"></script>
-  <script src="jquery.min.js"></script>
-  <script>Elm.Main.fullscreen()</script>
+</head>
+
+<body>
+</body>
+<script src="Main.js"></script>
+<script src="semantic.min.js"></script>
+<script src="jquery.min.js"></script>
+<script>
+    // With help from: https://github.com/evancz/elm-todomvc/blob/master/index.html
+    var storedState = localStorage.getItem('todo-save');
+    var startingState = storedState ? JSON.parse(storedState) : null;
+    var todo = Elm.Main.fullscreen(startingState)
+    todo.ports.setStorage.subscribe(function(state) {
+        localStorage.setItem('todo-save', JSON.stringify(state));
+    });
+</script>
+
 </html>

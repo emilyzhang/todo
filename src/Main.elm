@@ -1,4 +1,4 @@
-module Main exposing (..)
+port module Main exposing (..)
 
 import Html exposing (..)
 import View exposing (view)
@@ -8,9 +8,9 @@ import Models exposing (Msg(..), Model, Task, TaskId)
 -- MAIN
 
 
-main : Program Never Model Msg
+main : Program (Maybe Model) Model Msg
 main =
-    program
+    programWithFlags
         { init = init
         , view = view
         , update = update
@@ -22,17 +22,22 @@ main =
 -- INIT
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initialModel, Cmd.none )
+init : Maybe Model -> ( Model, Cmd Msg )
+init model =
+    case model of
+        Just model ->
+            ( model, Cmd.none )
+
+        Nothing ->
+            ( initialModel, Cmd.none )
 
 
 initialModel : Model
 initialModel =
     { tasks =
-        [ Task 0 False "welcome to this todo list!" False
+        [ Task 0 False "hello, this is a simple todo list" False
         , Task 1 True "things are pretty self explanatory" False
-        , Task 2 False "so get to work, ya overachiever!" False
+        , Task 2 False "so get to work, you overachiever! :)" False
         ]
     , newtask = ""
     , edit = ""
@@ -41,68 +46,98 @@ initialModel =
 
 
 
+-- PORTS
+
+
+port setStorage : Model -> Cmd msg
+
+
+
 -- UPDATE
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update message model =
-    case message of
+update msg model =
+    case msg of
         CreateTask writetask ->
-            ( { model | newtask = writetask }, Cmd.none )
+            let
+                newModel =
+                    { model | newtask = writetask }
+            in
+                ( newModel, setStorage newModel )
 
         EditTask edittask ->
-            ( { model | edit = edittask }, Cmd.none )
+            let
+                newModel =
+                    { model | edit = edittask }
+            in
+                ( newModel, setStorage newModel )
 
         AddTask ->
             if model.newtask == "" then
                 ( model, Cmd.none )
             else
-                ( { model
-                    | tasks = Task model.currentID False model.newtask False :: model.tasks
-                    , currentID = model.currentID + 1
-                  }
-                , Cmd.none
-                )
+                let
+                    newModel =
+                        { model
+                            | tasks = Task model.currentID False model.newtask False :: model.tasks
+                            , currentID = model.currentID + 1
+                        }
+                in
+                    ( newModel, setStorage newModel )
 
         DeleteTask taskId ->
             let
                 newTasks =
                     List.filter (\t -> t.id /= taskId) model.tasks
+
+                newModel =
+                    { model | tasks = newTasks }
             in
-                ( { model | tasks = newTasks }, Cmd.none )
+                ( newModel, setStorage newModel )
 
         ToggleCheck taskId ->
             let
                 newTasks =
                     List.map (toggleDone taskId) model.tasks
+
+                newModel =
+                    { model | tasks = newTasks }
             in
-                ( { model | tasks = newTasks }, Cmd.none )
+                ( newModel, setStorage newModel )
 
         ToggleEdit taskId ->
             let
                 newTasks =
                     List.map (toggleEdit taskId) model.tasks
+
+                newModel =
+                    { model | tasks = newTasks }
             in
-                ( { model | tasks = newTasks }, Cmd.none )
+                ( newModel, setStorage newModel )
 
         SaveEdit taskId ->
             if model.edit == "" then
                 let
                     newTasks =
                         List.map (toggleEdit taskId) model.tasks
+
+                    newModel =
+                        { model | tasks = newTasks }
                 in
-                    ( { model | tasks = newTasks }, Cmd.none )
+                    ( newModel, setStorage newModel )
             else
                 let
                     newTasks =
                         List.map (saveTask taskId model.edit) model.tasks
+
+                    newModel =
+                        { model
+                            | tasks = newTasks
+                            , edit = ""
+                        }
                 in
-                    ( { model
-                        | tasks = newTasks
-                        , edit = ""
-                      }
-                    , Cmd.none
-                    )
+                    ( newModel, setStorage newModel )
 
 
 toggleDone : TaskId -> Task -> Task
