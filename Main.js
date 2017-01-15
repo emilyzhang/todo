@@ -8644,118 +8644,16 @@ var _user$project$Main$toggleDone = F2(
 	function (taskId, task) {
 		return _elm_lang$core$Native_Utils.eq(task.id, taskId) ? A4(_user$project$Models$Task, task.id, !task.done, task.action, task.editing) : task;
 	});
-var _user$project$Main$update = F2(
-	function (message, model) {
-		var _p0 = message;
-		switch (_p0.ctor) {
-			case 'CreateTask':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{newtask: _p0._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'EditTask':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{edit: _p0._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'AddTask':
-				return _elm_lang$core$Native_Utils.eq(model.newtask, '') ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							tasks: {
-								ctor: '::',
-								_0: A4(_user$project$Models$Task, model.currentID, false, model.newtask, false),
-								_1: model.tasks
-							},
-							currentID: model.currentID + 1
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'DeleteTask':
-				var newTasks = A2(
-					_elm_lang$core$List$filter,
-					function (t) {
-						return !_elm_lang$core$Native_Utils.eq(t.id, _p0._0);
-					},
-					model.tasks);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{tasks: newTasks}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ToggleCheck':
-				var newTasks = A2(
-					_elm_lang$core$List$map,
-					_user$project$Main$toggleDone(_p0._0),
-					model.tasks);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{tasks: newTasks}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'ToggleEdit':
-				var newTasks = A2(
-					_elm_lang$core$List$map,
-					_user$project$Main$toggleEdit(_p0._0),
-					model.tasks);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{tasks: newTasks}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			default:
-				var _p1 = _p0._0;
-				if (_elm_lang$core$Native_Utils.eq(model.edit, '')) {
-					var newTasks = A2(
-						_elm_lang$core$List$map,
-						_user$project$Main$toggleEdit(_p1),
-						model.tasks);
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{tasks: newTasks}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					var newTasks = A2(
-						_elm_lang$core$List$map,
-						A2(_user$project$Main$saveTask, _p1, model.edit),
-						model.tasks);
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{tasks: newTasks, edit: ''}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				}
-		}
-	});
 var _user$project$Main$initialModel = {
 	tasks: {
 		ctor: '::',
-		_0: A4(_user$project$Models$Task, 0, false, 'welcome to this todo list!', false),
+		_0: A4(_user$project$Models$Task, 0, false, 'hello, this is a simple todo list', false),
 		_1: {
 			ctor: '::',
 			_0: A4(_user$project$Models$Task, 1, true, 'things are pretty self explanatory', false),
 			_1: {
 				ctor: '::',
-				_0: A4(_user$project$Models$Task, 2, false, 'so get to work, ya overachiever!', false),
+				_0: A4(_user$project$Models$Task, 2, false, 'so get to work, you overachiever! :)', false),
 				_1: {ctor: '[]'}
 			}
 		}
@@ -8764,16 +8662,209 @@ var _user$project$Main$initialModel = {
 	edit: '',
 	currentID: 3
 };
-var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
-var _user$project$Main$main = _elm_lang$html$Html$program(
+var _user$project$Main$init = function (model) {
+	var _p0 = model;
+	if (_p0.ctor === 'Just') {
+		return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
+	} else {
+		return {ctor: '_Tuple2', _0: _user$project$Main$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
+	}
+};
+var _user$project$Main$setStorage = _elm_lang$core$Native_Platform.outgoingPort(
+	'setStorage',
+	function (v) {
+		return {
+			tasks: _elm_lang$core$Native_List.toArray(v.tasks).map(
+				function (v) {
+					return {id: v.id, done: v.done, action: v.action, editing: v.editing};
+				}),
+			newtask: v.newtask,
+			edit: v.edit,
+			currentID: v.currentID
+		};
+	});
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'CreateTask':
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{newtask: _p1._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$setStorage(newModel)
+				};
+			case 'EditTask':
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{edit: _p1._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$setStorage(newModel)
+				};
+			case 'AddTask':
+				if (_elm_lang$core$Native_Utils.eq(model.newtask, '')) {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				} else {
+					var newModel = _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							tasks: {
+								ctor: '::',
+								_0: A4(_user$project$Models$Task, model.currentID, false, model.newtask, false),
+								_1: model.tasks
+							},
+							currentID: model.currentID + 1
+						});
+					return {
+						ctor: '_Tuple2',
+						_0: newModel,
+						_1: _user$project$Main$setStorage(newModel)
+					};
+				}
+			case 'DeleteTask':
+				var newTasks = A2(
+					_elm_lang$core$List$filter,
+					function (t) {
+						return !_elm_lang$core$Native_Utils.eq(t.id, _p1._0);
+					},
+					model.tasks);
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{tasks: newTasks});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$setStorage(newModel)
+				};
+			case 'ToggleCheck':
+				var newTasks = A2(
+					_elm_lang$core$List$map,
+					_user$project$Main$toggleDone(_p1._0),
+					model.tasks);
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{tasks: newTasks});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$setStorage(newModel)
+				};
+			case 'ToggleEdit':
+				var newTasks = A2(
+					_elm_lang$core$List$map,
+					_user$project$Main$toggleEdit(_p1._0),
+					model.tasks);
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{tasks: newTasks});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$setStorage(newModel)
+				};
+			default:
+				var _p2 = _p1._0;
+				if (_elm_lang$core$Native_Utils.eq(model.edit, '')) {
+					var newTasks = A2(
+						_elm_lang$core$List$map,
+						_user$project$Main$toggleEdit(_p2),
+						model.tasks);
+					var newModel = _elm_lang$core$Native_Utils.update(
+						model,
+						{tasks: newTasks});
+					return {
+						ctor: '_Tuple2',
+						_0: newModel,
+						_1: _user$project$Main$setStorage(newModel)
+					};
+				} else {
+					var newTasks = A2(
+						_elm_lang$core$List$map,
+						A2(_user$project$Main$saveTask, _p2, model.edit),
+						model.tasks);
+					var newModel = _elm_lang$core$Native_Utils.update(
+						model,
+						{tasks: newTasks, edit: ''});
+					return {
+						ctor: '_Tuple2',
+						_0: newModel,
+						_1: _user$project$Main$setStorage(newModel)
+					};
+				}
+		}
+	});
+var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
 	{
 		init: _user$project$Main$init,
 		view: _user$project$View$view,
 		update: _user$project$Main$update,
-		subscriptions: function (_p2) {
+		subscriptions: function (_p3) {
 			return _elm_lang$core$Platform_Sub$none;
 		}
-	})();
+	})(
+	_elm_lang$core$Json_Decode$oneOf(
+		{
+			ctor: '::',
+			_0: _elm_lang$core$Json_Decode$null(_elm_lang$core$Maybe$Nothing),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$core$Json_Decode$map,
+					_elm_lang$core$Maybe$Just,
+					A2(
+						_elm_lang$core$Json_Decode$andThen,
+						function (currentID) {
+							return A2(
+								_elm_lang$core$Json_Decode$andThen,
+								function (edit) {
+									return A2(
+										_elm_lang$core$Json_Decode$andThen,
+										function (newtask) {
+											return A2(
+												_elm_lang$core$Json_Decode$andThen,
+												function (tasks) {
+													return _elm_lang$core$Json_Decode$succeed(
+														{currentID: currentID, edit: edit, newtask: newtask, tasks: tasks});
+												},
+												A2(
+													_elm_lang$core$Json_Decode$field,
+													'tasks',
+													_elm_lang$core$Json_Decode$list(
+														A2(
+															_elm_lang$core$Json_Decode$andThen,
+															function (action) {
+																return A2(
+																	_elm_lang$core$Json_Decode$andThen,
+																	function (done) {
+																		return A2(
+																			_elm_lang$core$Json_Decode$andThen,
+																			function (editing) {
+																				return A2(
+																					_elm_lang$core$Json_Decode$andThen,
+																					function (id) {
+																						return _elm_lang$core$Json_Decode$succeed(
+																							{action: action, done: done, editing: editing, id: id});
+																					},
+																					A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$int));
+																			},
+																			A2(_elm_lang$core$Json_Decode$field, 'editing', _elm_lang$core$Json_Decode$bool));
+																	},
+																	A2(_elm_lang$core$Json_Decode$field, 'done', _elm_lang$core$Json_Decode$bool));
+															},
+															A2(_elm_lang$core$Json_Decode$field, 'action', _elm_lang$core$Json_Decode$string)))));
+										},
+										A2(_elm_lang$core$Json_Decode$field, 'newtask', _elm_lang$core$Json_Decode$string));
+								},
+								A2(_elm_lang$core$Json_Decode$field, 'edit', _elm_lang$core$Json_Decode$string));
+						},
+						A2(_elm_lang$core$Json_Decode$field, 'currentID', _elm_lang$core$Json_Decode$int))),
+				_1: {ctor: '[]'}
+			}
+		}));
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
