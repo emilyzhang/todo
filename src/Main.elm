@@ -80,7 +80,7 @@ update msg model =
                 let
                     newModel =
                         { model
-                            | tasks = Task model.currentID False model.newtask False :: model.tasks
+                            | tasks = model.tasks ++ [ Task model.currentID False model.newtask False ]
                             , currentID = model.currentID + 1
                         }
                 in
