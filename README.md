@@ -1,3 +1,3 @@
 # to do
 
-A simple todo list, built with elm. Try it out at (http://emilylzhang.me/todo)!
+A simple todo list, built with elm. Try it out at (https://emilyzhang.github.io/todo/)!
